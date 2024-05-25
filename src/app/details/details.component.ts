@@ -4,13 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-details',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      details works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>details works!</p> `,
+  styles: ``,
 })
-export class DetailsComponent {
-
-}
+export class DetailsComponent {}
