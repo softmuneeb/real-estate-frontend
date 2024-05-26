@@ -59,9 +59,13 @@ export class DetailsComponent {
   });
 
   constructor() {
-    const id = Number(this.route.snapshot.params['id']);
-    this.housingLocation = this.housingService.getHousingLocationById(id);
+    this.setHousingLocation();
   }
+
+  setHousingLocation = async () => {
+    const id = Number(this.route.snapshot.params['id']);
+    this.housingLocation = await this.housingService.getHousingLocationById(id);
+  };
 
   submitApplication() {
     this.housingService.submitApplication(
