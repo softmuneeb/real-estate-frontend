@@ -2,12 +2,18 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housinglocation';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
     <article>
       <img
@@ -35,9 +41,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
         <h2 class="section-heading">Apply now to live here</h2>
         <form [formGroup]="applyForm" (submit)="submitApplication()">
           <label for="first-name">First Name</label>
-          <input id="first-name" type="text" formControlName="firstName" />
-          <label for="last-name">Last Name</label>
-          <input id="last-name" type="text" formControlName="lastName" />
+          <input id="first-name" type="text" formControlName="name" />
+          <div
+            *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="name?.hasError('required')">Name is required.</div>
+            <div *ngIf="name?.hasError('minlength')">
+              Name must be at least 4 characters long.
+            </div>
+          </div>
+
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" />
           <button type="submit" class="primary">Apply now</button>
@@ -53,10 +67,20 @@ export class DetailsComponent {
   housingLocation: HousingLocation | undefined;
 
   applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.minLength(4),
+    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
+
+  get name() {
+    return this.applyForm.get('name');
+  }
+  get skill() {
+    return this.applyForm.get('skill');
+  }
 
   constructor() {
     this.setHousingLocation();
@@ -68,10 +92,20 @@ export class DetailsComponent {
   };
 
   submitApplication() {
+    // Check if the form is invalid
+    if (this.applyForm.invalid) {
+      // Mark all controls as touched to trigger validation messages
+      this.applyForm.markAllAsTouched();
+      console.log('Erros Form submitted');
+      return;
+    }
+
+    // Proceed with form submission
+    console.log('Form submitted', this.applyForm.value);
+
     this.housingService.submitApplication(
-      this.applyForm.value.firstName ?? '',
-      this.applyForm.value.lastName ?? '',
-      this.applyForm.value.email ?? '',
+      this.applyForm.value.name || '',
+      this.applyForm.value.email || '',
     );
   }
 }
