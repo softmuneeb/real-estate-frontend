@@ -11,10 +11,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0-rc",
+    "@angular/cdk": "^17.3.10",
     "@angular/common": "^17.3.0-rc",
     "@angular/compiler": "^17.3.0-rc",
     "@angular/core": "^17.3.0-rc",
     "@angular/forms": "^17.3.0-rc",
+    "@angular/material": "^17.3.10",
     "@angular/platform-browser": "^17.3.0-rc",
     "@angular/router": "^17.3.0-rc",
     "rxjs": "~7.8.0",

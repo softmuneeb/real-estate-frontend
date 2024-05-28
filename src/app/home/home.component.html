@@ -8,15 +8,15 @@
 </section>
 
 @if(filteredLocationList.length === 0) {
-  <div>Loading</div>
-  } @if(filteredLocationList.length > 0) {
-  <div>Loaded</div>
+<mat-spinner diameter="25"></mat-spinner>
+} @if(filteredLocationList.length > 0) {
+<div>{{ filteredLocationList.length }} properties</div>
 }
 
 <section class="results">
   @for (housingLocation of filteredLocationList; track housingLocation) {
-    <app-housing-location
-      [housingLocation]="housingLocation"
-    ></app-housing-location>
+  <app-housing-location
+    [housingLocation]="housingLocation"
+  ></app-housing-location>
   }
 </section>

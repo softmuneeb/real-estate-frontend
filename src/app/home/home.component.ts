@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { HousingLocation } from '../housinglocation';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingService } from '../housing.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HousingLocationComponent],
+  imports: [HousingLocationComponent, MatProgressSpinnerModule],
   templateUrl: 'home.component.html',
   styleUrl: 'home.component.css',
 })
@@ -19,7 +20,7 @@ export class HomeComponent {
 
   constructor() {
     // TODO ADD SPINNER
-    this.housingLocationList = [];
+    this.housingLocationList = [];  
     this.filteredLocationList = [];
     this.setHousingLocation();
   }
