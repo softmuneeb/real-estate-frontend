@@ -7,7 +7,6 @@ import { HousingLocation } from './housinglocation';
 export class HousingService {
   constructor() {}
 
-  // json-server --watch db.json
   url = 'http://localhost:3000/locations';
 
   async getAllHousingLocations(): Promise<HousingLocation[]> {
