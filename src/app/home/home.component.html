@@ -8,14 +8,15 @@
 </section>
 
 @if(filteredLocationList.length === 0) {
-<div>Loading</div>
-} @if(filteredLocationList.length > 0) {
-<div>Loaded</div>
+  <div>Loading</div>
+  } @if(filteredLocationList.length > 0) {
+  <div>Loaded</div>
 }
 
 <section class="results">
-  <app-housing-location
-    *ngFor="let housingLocation of filteredLocationList"
-    [housingLocation]="housingLocation"
-  ></app-housing-location>
+  @for (housingLocation of filteredLocationList; track housingLocation) {
+    <app-housing-location
+      [housingLocation]="housingLocation"
+    ></app-housing-location>
+  }
 </section>

@@ -8,19 +8,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
     <article>
       <img
         class="listing-photo"
         [src]="housingLocation?.photo"
         alt="Exterior photo of {{ housingLocation?.name }}"
-      />
+        />
       <section class="listing-description">
         <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
         <p class="listing-location">
@@ -42,23 +42,28 @@ import { CommonModule } from '@angular/common';
         <form [formGroup]="applyForm" (submit)="submitApplication()">
           <label for="first-name">First Name</label>
           <input id="first-name" type="text" formControlName="name" />
-          <div
-            *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-            class="alert alert-danger"
-          >
-            <div *ngIf="name?.hasError('required')">Name is required.</div>
-            <div *ngIf="name?.hasError('minlength')">
-              Name must be at least 4 characters long.
+          @if (name?.invalid && (name?.dirty || name?.touched)) {
+            <div
+              class="alert alert-danger"
+              >
+              @if (name?.hasError('required')) {
+                <div>Name is required.</div>
+              }
+              @if (name?.hasError('minlength')) {
+                <div>
+                  Name must be at least 4 characters long.
+                </div>
+              }
             </div>
-          </div>
-
+          }
+    
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" />
           <button type="submit" class="primary">Apply now</button>
         </form>
       </section>
     </article>
-  `,
+    `,
   styleUrls: ['details.component.css'],
 })
 export class DetailsComponent {
